@@ -37,15 +37,16 @@ interface RequestOptions {
 
 export async function request<R>(opts: RequestOptions): Promise<R> {
   const { withAPIKey = true } = opts;
-
+  const url = new URL(opts.url, import.meta.env.VITE_API_URL);
+  const apiKey = useApiKey();
   const { data: body } = await axiosInstance({
-    url: opts.url,
+    url: url.href,
     method: opts.method,
     params: opts.params,
     data: opts.data,
     headers: withAPIKey
       ? {
-          Key: localStorage.getItem(API_KEY_STORAGE_KEY) || ""
+          Key: apiKey.value || ""
         }
       : undefined
   });

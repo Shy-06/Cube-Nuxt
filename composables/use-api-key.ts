@@ -1,9 +1,9 @@
 import { useStorage } from "@vueuse/core";
 
-export const API_KEY_STORAGE_KEY = "@zjutjh/cube/api-key";
+import { API_KEY_STORAGE_KEY } from "~/assets/constant";
 
 export const useApiKey = () => {
-  const apiKey = useStorage(API_KEY_STORAGE_KEY, "");
+  const apiKey = useStorage<string>(API_KEY_STORAGE_KEY, "", undefined, { initOnMounted: true });
 
   return apiKey;
 };
