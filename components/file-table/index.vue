@@ -76,17 +76,12 @@ const handleCopyFileUrl = async (objectKey: string) => {
   ElMessage.success("已复制Url至剪贴板");
 };
 
-// http://remote/api/file?bucket=forum&object_key=abcccc/088afb14-3a15-11f0-b300-00163e7ed273.jpg
+// http://remote/files/bucket/object_key
+// http://remote/thumbnails/bucket/object_key
 const getFileRealUrl = (options: { objectKey: string; thumbnail?: boolean }) => {
   const { objectKey, thumbnail = false } = options;
   const url = new URL(import.meta.env.VITE_API_URL);
-  url.href = `${url.href}api/file`;
-  url.searchParams.append("bucket", props.bucket);
-  url.searchParams.append("object_key", objectKey);
-  if (thumbnail) {
-    url.searchParams.append("thumbnail", "true");
-  }
-
+  url.href = `${url.href}${thumbnail ? "thumbnails" : "files"}/${props.bucket}/${objectKey}`;
   return url.href;
 };
 
